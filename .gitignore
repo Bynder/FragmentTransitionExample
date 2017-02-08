@@ -3,6 +3,7 @@
 *.ap_
 
 # Files for the ART/Dalvik VM
+/.idea
 *.dex
 
 # Java class files
@@ -38,3 +39,14 @@ captures/
 
 # Keystore files
 *.jks
+
+.DS_Store
+app/.DS_Store
+app/libs/
+app/src/.DS_Store
+app/src/main/.DS_Store
+app/src/main/java/.DS_Store
+app/src/main/java/com/.DS_Store
+app/src/main/java/com/getbynder/.DS_Store
+app/src/main/res/.DS_Store
+app/src/main/res/drawable/.DS_Store
