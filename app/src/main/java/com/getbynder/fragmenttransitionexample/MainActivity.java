@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.transition.Fade;
-import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.transition.TransitionSet;
 import android.view.View;
@@ -21,6 +20,9 @@ public class MainActivity extends AppCompatActivity
 
     private FragmentManager mFragmentManager;
 
+    private Handler mDelayedTransactionHandler = new Handler();
+    private Runnable mRunnable = this::performTransition;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -31,9 +33,7 @@ public class MainActivity extends AppCompatActivity
         mFragmentManager = getSupportFragmentManager();
 
         loadInitialFragment();
-
-        Handler handler = new Handler();
-        handler.postDelayed(this::performTransition, 1000);
+        mDelayedTransactionHandler.postDelayed(mRunnable, 1000);
     }
 
     private void loadInitialFragment()
@@ -77,5 +77,12 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.addSharedElement(logo, logo.getTransitionName());
         fragmentTransaction.replace(R.id.fragment_container, nextFragment);
         fragmentTransaction.commitAllowingStateLoss();
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        mDelayedTransactionHandler.removeCallbacks(mRunnable);
     }
 }
